@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
-import Nav from '../Nav'
-import Contact from '../Contact/Contact';
+import Header from '../Header'
+import AboutUs from '../AboutUs'
+import Price from '../Price'
+import Contact from '../Contact';
+import Footer from '../Footer'
 
 class Home extends Component {
     render() {
         return (
             <>
-            <Nav />
+            <Header />
+            <AboutUs />
+            <Price />
             <Contact />
+            <Footer />
             </>
         );
     }

@@ -1,5 +1,4 @@
 import React from 'react';
-// import Nav from './component/site/Nav/';
 import Home from './component/site/Home/'
 
 import { 

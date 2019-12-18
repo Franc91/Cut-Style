@@ -107,14 +107,7 @@ import React, { Component } from 'react';
 class Nav extends Component {
     render() {
         return (
-            <div className="navigation">
-            <input type="checkbox" className="navigation__checkbox" id="navi-toggle"/>
-
-            <label for="navi-toggle" className="navigation__button">
-                <span className="navigation__icon">&nbsp;</span>
-            </label>
-
-            <div className="navigation__background">&nbsp;</div>
+            <div className="navigation" style={{border: '1px solid red', margin: 10}}>
 
             <nav className="navigation__nav">
                 <ul className="navigation__list">
