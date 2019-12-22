@@ -103,22 +103,71 @@
 // };
 
 import React, { Component } from 'react';
+import { Link } from 'react-scroll';
+import { MenuList, MenuItem } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
 
 class Nav extends Component {
     render() {
         return (
-            <div className="navigation" style={{border: '1px solid red', margin: 10}}>
-
-            <nav className="navigation__nav">
-                <ul className="navigation__list">
-                    <li className="navigation__item"><a href="#" className="navigation__link">O Nas</a></li>
-                    <li className="navigation__item"><a href="#" className="navigation__link">Cennik</a></li>
-                    <li className="navigation__item"><a href="#" className="navigation__link">Kontakt</a></li>
-                    <li className="navigation__item"><a href="#" className="navigation__link">Rejestracja</a></li>
-                    <li className="navigation__item"><a href="#" className="navigation__link">Logowanie</a></li>
-                    </ul>
+            <nav className="navigation__nav" style={{border: '1px solid red', margin: 10, height: '5vh', display:'flex', alignItems:'center' }}>
+                <MenuList className='navigation' style={{display:'flex', flexDirection: 'row', alignItems:'center', justifyContent:'center'}}>
+                    <MenuItem  className="navigationList__item">
+                        <Link 
+                        activeClass="active"
+                        to="AboutUs"
+                        spy={true}
+                        smooth={true}
+                        offset={50}
+                        duration={500}
+                        delay={0}
+                        >
+                            O Nas
+                        </Link>
+                    </MenuItem>
+                    <MenuItem  className="navigationList__item">
+                        <Link 
+                        activeClass="active"
+                        to="Price"
+                        spy={true}
+                        smooth={true}
+                        offset={0}
+                        duration={500}
+                        delay={0}
+                        >
+                            Cennik
+                        </Link>
+                    </MenuItem >
+                    <MenuItem  className="navigationList__item">
+                        <Link 
+                        activeClass="active"
+                        to="Contact"
+                        spy={true}
+                        smooth={true}
+                        offset={0}
+                        duration={500}
+                        delay={0}
+                        >
+                            Kontakt
+                        </Link>
+                    </MenuItem>
+                    <MenuItem  className="navigationList__item">
+                        <RouterLink
+                        style={{textDecoration: 'none'}} 
+                        to="/signUp">
+                            Rejestracja
+                        </RouterLink>
+                    </MenuItem>
+                    <MenuItem  className="navigationList__item">
+                        <RouterLink
+                        style={{textDecoration: 'none'}} 
+                        to="/signIn"
+                        >
+                            Logowanie
+                        </RouterLink>
+                    </MenuItem>
+                </MenuList>    
             </nav>
-        </div>
         );
     }
 }

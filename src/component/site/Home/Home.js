@@ -8,13 +8,13 @@ import Footer from '../Footer'
 class Home extends Component {
     render() {
         return (
-            <>
+            <div className='container Home'>
             <Header />
             <AboutUs />
             <Price />
             <Contact />
             <Footer />
-            </>
+            </ div>
         );
     }
 }
