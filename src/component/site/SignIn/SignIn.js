@@ -4,9 +4,15 @@ import SendIcon from '@material-ui/icons/Send';
 
 
 export class SignIn extends Component {
-    style={
+    state={
         email:'',
-        password:''
+        password:'',
+        alertMail:'',
+        alertPass:'',
+        error:{
+            email: false,
+            password: false
+        }
 
     }
     get formStyle(){
@@ -36,18 +42,42 @@ export class SignIn extends Component {
         })
     }
 
-    handleOnChange=(e)=>{
-        this.setState({
-            [e.target.name]: e.target.value
+    get alertStyle(){
+        return({
+            color: "red"
         })
     }
+
+    handleOnChange=(e)=>{
+        this.setState({
+            [e.target.name]: e.target.value,       
+        })
+    }
+    handleOnSubmit = (e) => {
+        e.preventDefault();
+        this.setState(prev => ({
+            ...prev,
+            error: {
+              ...prev.error,
+              email: (this.state.email.indexOf('@') > -1|| this.state.email.length >= 3 )? false : true,
+              password: this.state.password.length < 5 ? true : false
+            } 
+        }))
+    }
+
+
+ 
     render() {
         return (
             <div className="SignIn row" style={this.divStyle} >
-                <form style={this.formStyle}>
+                
+                <form style={this.formStyle} onSubmit={this.handleOnSubmit}>
                     <TextField type="email" label="e-mail" name="email" onChange={this.handleOnChange}/>
+                    <p style={this.alertStyle}>{this.state.error.email && "Email powinien zawierać co najmniej 3 znaki oraz @"}</p>
                     <TextField type="password" label="Hasło" name="password" onChange={this.handleOnChange}/>
+                    <p style={this.alertStyle}>{this.state.error.password && "Błędne Hasło"}</p>
                     <Button
+                        type="submit"
                         style={this.buttonStyle}
                         variant="contained"
                         color="primary"
