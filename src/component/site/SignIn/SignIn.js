@@ -75,7 +75,7 @@ export class SignIn extends Component {
                     <TextField type="email" label="e-mail" name="email" onChange={this.handleOnChange}/>
                     <p style={this.alertStyle}>{this.state.error.email && "Email powinien zawierać co najmniej 3 znaki oraz @"}</p>
                     <TextField type="password" label="Hasło" name="password" onChange={this.handleOnChange}/>
-                    <p style={this.alertStyle}>{this.state.error.password && "Błędne Hasło"}</p>
+                    <p style={this.alertStyle}>{this.state.error.password && "Błędne Hasło "}</p>
                     <Button
                         type="submit"
                         style={this.buttonStyle}
