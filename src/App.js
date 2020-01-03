@@ -1,12 +1,11 @@
 import React from 'react';
 import Home from './component/site/Home/'
+import Application from './component/application/Application'
 
 import { 
   HashRouter as Router,
   Switch,
   Route } from 'react-router-dom';
-  import SignUp from './component/site/SignUp';
-  import SignIn from './component/site/SignIn/SignIn';
 
 
 function App() {
@@ -16,8 +15,7 @@ function App() {
         <Router>
           <Switch>
              <Route exact path="/" component={Home} /> 
-             <Route path='/signUp' component={SignUp} />
-             <Route path='/signIn' component={SignIn} />
+             <Route path="/app" component={Application} />
           </Switch>
         </Router>
     </div>
