@@ -1,8 +1,8 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import app from 'firebase/app';
+import 'firebase/firebase-firestore';
 import 'firebase/auth';  
   
-  var firebaseConfig = {
+  const firebaseConfig = {
     apiKey: "AIzaSyDleF7RKXV6Lo0VNgrKoEY3t-33oLo9qrs",
     authDomain: "haircutbase-ecd78.firebaseapp.com",
     databaseURL: "https://haircutbase-ecd78.firebaseio.com",
@@ -14,8 +14,32 @@ import 'firebase/auth';
   };
 
   // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+  // firebase.initializeApp(firebaseConfig);
 
-  firebase.firestore().settings({ timestampsInSnapshots: true})
+  // firebase.firestore().settings({ timestampsInSnapshots: true})
 
-  export default firebase;
+  class firebase{
+      constructor(){
+        app.initializeApp(firebaseConfig);
+        this.auth=app.auth();
+        this.db=app.firestore() 
+      }
+
+      login(email,password){
+        return this.auth.signInWithEmailAndPassword(email,password)
+      }
+
+      logout () {
+        return this.auth.signOut()
+      }
+
+      async register( name, surname, email, password) {
+        await this.auth.createUserWithEmailAndPassword( name, surname, email, password )
+        return this.auth.currentUser.updateProfile({
+          displayName: name + surname,
+
+        })
+      }
+  }
+  export default new.firebase()
+  // export default firebase;

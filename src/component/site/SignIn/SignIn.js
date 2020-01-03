@@ -23,7 +23,7 @@ export class SignIn extends Component {
             justifyContent: "center",
             position: "absolute",
             left: "50%",
-            width: "30%",
+            width: "50%",
             transform: "translate(-50%,-50%)",
             top: "50%"
         })
@@ -32,7 +32,7 @@ export class SignIn extends Component {
     get divStyle (){
         return({
             position: 'relative',
-            height: "90vh"
+            height: '15rem'
         })
     }
 
@@ -72,9 +72,9 @@ export class SignIn extends Component {
             <div className="SignIn row" style={this.divStyle} >
                 
                 <form style={this.formStyle} onSubmit={this.handleOnSubmit}>
-                    <TextField type="email" label="e-mail" name="email" onChange={this.handleOnChange}/>
+                    <TextField type="email" label="e-mail" name="email" value={this.state.email} onChange={this.handleOnChange}/>
                     <p style={this.alertStyle}>{this.state.error.email && "Email powinien zawierać co najmniej 3 znaki oraz @"}</p>
-                    <TextField type="password" label="Hasło" name="password" onChange={this.handleOnChange}/>
+                    <TextField type="password" label="Hasło" name="password" value={this.state.password} onChange={this.handleOnChange}/>
                     <p style={this.alertStyle}>{this.state.error.password && "Błędne Hasło "}</p>
                     <Button
                         type="submit"
