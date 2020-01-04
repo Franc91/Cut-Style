@@ -77,7 +77,7 @@ class SignIn extends Component {
     render(){
         return (
             <div className="SignIn row" style={this.divStyle} >
-                <form style={this.formStyle} onSubmit={this.handleOnSubmit} noValidate>
+                <form style={this.formStyle} onSubmit={this.handleOnSubmit}> {/*novalidate*/}
                     <TextField 
                     type="email" 
                     label="e-mail" 

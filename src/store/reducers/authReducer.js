@@ -1,3 +1,4 @@
+
 const initState = {
     authError: null
   }
@@ -13,8 +14,12 @@ const initState = {
       case 'LOGIN_SUCCESS':
         console.log('login success');
         return {
-          authError: null
+          authError: null,
+
         }
+      case 'SIGNOUT_SUCCESS':
+          console.log('SignOut success')
+          return state;
       default:
         return state
     }
