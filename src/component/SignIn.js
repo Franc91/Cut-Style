@@ -33,7 +33,7 @@ class SignIn extends Component {
     get divStyle(){
         return({
             position: 'relative',
-            height: '15rem'
+            height: '20rem'
         })
     }
 
@@ -104,19 +104,25 @@ class SignIn extends Component {
                     > 
                     Zaloguj
                     </Button>
+                    <div className="auth-error">
+                        {this.props.authError? <p style={this.alertStyle}>{this.props.authError}</p> : null}
+                    </div>
                 </form>
+
             </div>
         )
     }
 }
-const mapStateToProps = (state) =>{
+const mapStateToProps = (state) => {
     return{
-        authError: state.auth.authError
+      authError: state.auth.authError
     }
-}
-const mapDispatchToProps = (dispatch) =>{
-    return{
-        signIn: (creds) => dispatch(signIn(creds))
+  }
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      signIn: (creds) => dispatch(signIn(creds))
     }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn)
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(SignIn)
