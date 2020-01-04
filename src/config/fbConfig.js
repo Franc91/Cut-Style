@@ -1,5 +1,5 @@
-import app from 'firebase/app';
-import 'firebase/firebase-firestore';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 import 'firebase/auth';  
   
   const firebaseConfig = {
@@ -14,32 +14,8 @@ import 'firebase/auth';
   };
 
   // Initialize Firebase
-  // firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseConfig);
 
   // firebase.firestore().settings({ timestampsInSnapshots: true})
 
-  class firebase{
-      constructor(){
-        app.initializeApp(firebaseConfig);
-        this.auth=app.auth();
-        this.db=app.firestore() 
-      }
-
-      login(email,password){
-        return this.auth.signInWithEmailAndPassword(email,password)
-      }
-
-      logout () {
-        return this.auth.signOut()
-      }
-
-      async register( name, surname, email, password) {
-        await this.auth.createUserWithEmailAndPassword( name, surname, email, password )
-        return this.auth.currentUser.updateProfile({
-          displayName: name + surname,
-
-        })
-      }
-  }
-  export default new.firebase()
-  // export default firebase;
+  export default firebase;

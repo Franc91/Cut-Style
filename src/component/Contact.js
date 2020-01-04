@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
-import Map from './Map';
-import ContactInfo from './ContactInfo';
+import Map from '../component/Map';
+import ContactInfo from '../component/ContactInfo';
 
 export class Contact extends Component {
     get divStyle(){
