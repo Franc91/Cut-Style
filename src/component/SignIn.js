@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
+import { connect } from 'react-redux';
+import { signIn } from '../store/action/authAction'
 
-const SignIn = () => {
-    const [state, setState] = useState({
+class SignIn extends Component {
+    state ={
         email:'',
         password:'',
         alertMail:'',
@@ -13,8 +15,9 @@ const SignIn = () => {
             password: false
         }
 
-    })
-    const formStyle = {
+    }
+    get formStyle(){
+        return({
             display: "flex",
             flexDirection: "column",
             alignItem: "center",
@@ -24,24 +27,26 @@ const SignIn = () => {
             width: "50%",
             transform: "translate(-50%,-50%)",
             top: "50%"
-    
+        })   
     }
 
-    const divStyle = {
-        
+    get divStyle(){
+        return({
             position: 'relative',
             height: '15rem'
-    
+        })
     }
 
-    const buttonStyle = {
-        
+    get buttonStyle(){
+        return({
             marginTop: '1rem'
+        })
     }
 
-    const alertStyle = {
+    get alertStyle(){
+        return({
             color: "red"
-
+        })
     }
 
 
@@ -52,46 +57,46 @@ const SignIn = () => {
     //     }
     // }
 
-    const handleOnChange=({ target })=>{
-        console.warn(target.name)
-        setState(prev => ({
-            ...prev,
-            [target.name]: target.value,       
-        }))
+    handleOnChange=(e)=>{
+        this.setState({
+            [e.target.name]: e.target.value,       
+        })
     }
-    const handleOnSubmit = (e) => {
+    handleOnSubmit = (e) => {
         e.preventDefault();
-        setState(prev => ({
+        this.setState(prev => ({
             ...prev,
             error: {
               ...prev.error,
-              email: (prev.email.indexOf('@') > -1 && prev.email.length >= 3 )? false : true,
-              password: prev.password.length > 5 ? false : true
+              email: (this.state.email.indexOf('@') > -1 && this.state.email.length >= 3 )? false : true,
+              password: this.state.password.length > 5 ? false : true
             } 
         }))
+        this.props.signIn(this.state)
     }
-    console.warn(state)
+    render(){
         return (
-            <div className="SignIn row" style={divStyle} >
-                
-                <form style={formStyle} onSubmit={handleOnSubmit} noValidate>
+            <div className="SignIn row" style={this.divStyle} >
+                <form style={this.formStyle} onSubmit={this.handleOnSubmit} noValidate>
                     <TextField 
                     type="email" 
                     label="e-mail" 
-                    name="email" 
-                    value={state.email} 
-                    onChange={handleOnChange}/>
-                    <p style={alertStyle}>{state.error.email && "Email powinien zawierać co najmniej 3 znaki oraz @"}</p>
+                    name="email"
+                    id="email" 
+                    value={this.state.email} 
+                    onChange={this.handleOnChange}/>
+                    <p style={this.alertStyle}>{this.state.error.email && "Email powinien zawierać co najmniej 3 znaki oraz @"}</p>
                     <TextField 
                     type="password" 
                     label="Hasło" 
-                    name="password" 
-                    value={state.password}
-                    onChange={handleOnChange}/>
-                    <p style={alertStyle}>{state.error.password && "Hasło powinno zawierać min 5 znaków "}</p>
+                    name="password"
+                    id="password" 
+                    value={this.state.password}
+                    onChange={this.handleOnChange}/>
+                    <p style={this.alertStyle}>{this.state.error.password && "Hasło powinno zawierać min 5 znaków "}</p>
                     <Button
                         type="submit"
-                        style={buttonStyle}
+                        style={this.buttonStyle}
                         variant="contained"
                         color="primary"
                         className='signUpBtn'
@@ -102,6 +107,16 @@ const SignIn = () => {
                 </form>
             </div>
         )
+    }
 }
-
-export default SignIn
+const mapStateToProps = (state) =>{
+    return{
+        authError: state.auth.authError
+    }
+}
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        signIn: (creds) => dispatch(signIn(creds))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn)

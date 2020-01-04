@@ -8,7 +8,7 @@ const SignUp = () => {
         surname:'',
         email:'',
         password:'',
-        rePassword:'',
+        rePassword:'', 
         error:{
             name: false,
             surname: false,
@@ -53,12 +53,13 @@ const SignUp = () => {
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
+        console.log(state)
         setState(prev => ({
             ...prev,
             error: {
               ...prev.error,
               email: (prev.email.indexOf('@') > -1|| prev.email.length >= 3 )? false : true,
-              password: (prev.password === prev.rePassword || prev.password < 5) ? true : false ,
+              password: (prev.password === prev.rePassword && prev.password.length < 5) ? true : false ,
               name: prev.name < 5 ? true : false,
               surname: prev.surname < 5 ? true : false
             } 

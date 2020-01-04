@@ -4,6 +4,7 @@ import { MenuList, MenuItem } from '@material-ui/core';
 import Popup from "reactjs-popup";
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import { connect } from 'react-redux';
 
 class Nav extends Component {
     render() {
@@ -71,5 +72,11 @@ class Nav extends Component {
     }
 }
 
+const mapStateToProps = (state) =>{
+    console.log(state)
+    return{
 
-export default Nav
+    }
+}
+
+export default connect(mapStateToProps)(Nav)
