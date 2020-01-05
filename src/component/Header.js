@@ -1,15 +1,25 @@
 import React, { Component } from 'react';
-import Nav from './Nav'
-import {ThemeContext} from '../contexts/ThemeContext'
+import { NavLink as Link } from 'react-router-dom';
+import Navbar from './layout/Navbar';
 
 export class Header extends Component {
-    static contextType = ThemeContext
+    get divStyle(){
+        return ({
+            border: '1px solid red', 
+            marginBottom: 10, 
+            height: '10vh', 
+            display:'flex',
+            flexDirection: 'row', 
+            alignItems:"center", 
+            justifyContent: 'space-between',
+
+        })
+    }
     render() {
-        const { isLightTheme, light, dark } = this.context;
-        const theme = isLightTheme ? dark : light;
         return (
-            <div style={{border: '1px solid red', marginBottom: 10, height: '10vh', display:'flex', alignItems: 'flex-end', flexDirection: 'row', justifyContent: 'center',backgroundColor: theme.bg, color: theme.syntax }}>
-                <Nav />
+            <div style={this.divStyle}>
+                <Link to='/' className="navigation__logo">Cut&Style</Link>
+                <Navbar/>
             </div>
         )
     }

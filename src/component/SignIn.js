@@ -33,7 +33,8 @@ class SignIn extends Component {
     get divStyle(){
         return({
             position: 'relative',
-            height: '20rem'
+            height: '65vh',
+            marginBottom: 10
         })
     }
 
@@ -48,14 +49,6 @@ class SignIn extends Component {
             color: "red"
         })
     }
-
-
-    //zrobi to na then
-    // componentDidUpdate() {
-    //     if (!this.state.error.password) {
-    //         this.props.history.push("/app")
-    //     }
-    // }
 
     handleOnChange=(e)=>{
         this.setState({

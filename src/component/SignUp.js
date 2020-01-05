@@ -32,7 +32,8 @@ const SignUp = () => {
     const divStyle ={
         
             position: 'relative',
-            height: '40rem',
+            height: '65vh',
+            marginBottom: 10
     }
 
     const buttonStyle={

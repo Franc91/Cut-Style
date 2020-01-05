@@ -1,33 +1,32 @@
 import React from 'react';
-import Home from './component/Home'
-import Application from './component/application/Application';
-import ThemeContextProvider from './contexts/ThemeContext'
-import AuthContextProvider from './contexts/AuthContext';
-
-
+import Dashboard from './component/Dashboard';
+import Header from './component/Header';
+import Footer from './component/Footer';
+import Registration from './component/Registration'
+import HomePage from './component/HomePage'
+import SignIn from './component/SignIn';
+import SignUp from './component/SignUp';
 import { 
   HashRouter as Router,
   Switch,
   Route } from 'react-router-dom';
 
 
-
 function App() {
   return (
-    <>
     <div className="App">
-      <ThemeContextProvider>
-        <AuthContextProvider>
           <Router>
+            <Header />
             <Switch>
-              <Route exact path="/" component={Home} /> 
-              <Route path="/app" component={Application} />
+              <Route exact path="/" component={HomePage} />
+              <Route path="/info" component={Dashboard} />
+              <Route path="/registration" component={Registration} />
+              <Route path="/signup" component={SignUp}/>
+              <Route path="/signin" component={SignIn}/>
             </Switch>
+            <Footer/>
           </Router>
-        </AuthContextProvider>
-      </ThemeContextProvider>
     </div>
-    </>
   );
 }
 
