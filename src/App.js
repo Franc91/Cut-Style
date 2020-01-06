@@ -6,6 +6,7 @@ import Registration from './component/Registration'
 import HomePage from './component/HomePage'
 import SignIn from './component/SignIn';
 import SignUp from './component/SignUp';
+import firebase from "./config/fbConfig";
 import { 
   HashRouter as Router,
   Switch,

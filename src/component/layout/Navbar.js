@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import SignOutLinks from './SignOutLinks';
 import SignInLinks from './SignInLinks';
-import { connect } from 'react-redux';
 
 class Navbar  extends Component {
     get divStyle (){
@@ -21,11 +20,5 @@ class Navbar  extends Component {
     }
 }
 
-const mapStateToProps = (state) =>{
-    console.log(state)
-    return{
-        auth: state.firebase.auth
-    }
-}
  
-export default connect(mapStateToProps)(Navbar);
+export default Navbar;

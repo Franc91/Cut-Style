@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
-import { connect } from 'react-redux';
-import { signIn } from '../store/action/authAction'
 
 class SignIn extends Component {
     state ={
@@ -98,7 +96,7 @@ class SignIn extends Component {
                     Zaloguj
                     </Button>
                     <div className="auth-error">
-                        {this.props.authError? <p style={this.alertStyle}>{this.props.authError}</p> : null}
+                
                     </div>
                 </form>
 
@@ -106,16 +104,5 @@ class SignIn extends Component {
         )
     }
 }
-const mapStateToProps = (state) => {
-    return{
-      authError: state.auth.authError
-    }
-  }
   
-  const mapDispatchToProps = (dispatch) => {
-    return {
-      signIn: (creds) => dispatch(signIn(creds))
-    }
-  }
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(SignIn)
+export default SignIn

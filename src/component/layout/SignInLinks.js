@@ -1,8 +1,6 @@
 import React from 'react';
 import { NavLink as Link } from 'react-router-dom';
 import { MenuList, MenuItem, Avatar } from '@material-ui/core';
-import { connect } from 'react-redux';
-import { signOut } from '../../store/action/authAction';
 
 const SignInLinks = (props)=> {
     return (
@@ -28,11 +26,5 @@ const SignInLinks = (props)=> {
                 </MenuList>
     );
 }
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        signOut: () => dispatch(signOut())
-    }
-  }
   
-export default connect(null, mapDispatchToProps)(SignInLinks)
+export default SignInLinks
