@@ -61,7 +61,7 @@ const SignIn = () => {
             } 
         }))
         firebase.auth().signInWithEmailAndPassword(state.email, state.password)
-        .then(()=>{console.log('zalogowano', firebase.auth().currentUser.uid, firebase.auth().currentUser.email)})
+        .then(()=>{console.log('zalogowano', firebase.auth().currentUser.uid, firebase.auth().currentUser.email, firebase.auth().currentUser.name)})
         .catch((error)=>{
             setState(prev=>({
                 ...prev,
