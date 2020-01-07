@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import firebase from "../config/fbConfig";
@@ -10,6 +10,8 @@ const SignUp = () => {
         email:'',
         password:'',
         rePassword:'', 
+        fireError: '',
+        loginBtn: true, 
         error:{
             name: false,
             surname: false,
@@ -18,20 +20,6 @@ const SignUp = () => {
         }
 
     })
-
-    useEffect(()=>{
-        authListener();
-    })
-
-    const authListener = () =>{
-        firebase.auth().onAuthStateChanged((user)=>{
-            if(user){
-                setState({user})
-            }else{
-                setState({user: null})
-            }
-        })
-    }
 
     const formStyle={
             display: "flex",
@@ -81,10 +69,22 @@ const SignUp = () => {
               surname: prev.surname < 5 ? true : false
             } 
         }))
-    }
+        firebase.auth().createUserWithEmailAndPassword(state.email, state.password).then(()=>{console.log('zarejstrowano')})
+        .catch((error)=>{
+            setState(prev=>({
+                ...prev,
+                fireError: error.message
+            })
+        )
+    })
+}
+
     return (
         <div className="SignUp row" style={divStyle} >
             <form style={formStyle} onSubmit={handleOnSubmit}>
+                {
+                    state.fireError ? <div>{state.fireError}</div> : null
+                }
                 <TextField 
                 type="text" 
                 label="Imię" 

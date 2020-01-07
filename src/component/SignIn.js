@@ -1,21 +1,23 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
+import firebase from "../config/fbConfig";
 
-class SignIn extends Component {
-    state ={
+const SignIn = () => {
+    const [state, setState] = useState({
         email:'',
         password:'',
         alertMail:'',
         alertPass:'',
+        fireError: '',
         error:{
             email: false,
             password: false
         }
 
-    }
-    get formStyle(){
-        return({
+    })
+    const formStyle={
+
             display: "flex",
             flexDirection: "column",
             alignItem: "center",
@@ -24,70 +26,76 @@ class SignIn extends Component {
             left: "50%",
             width: "50%",
             transform: "translate(-50%,-50%)",
-            top: "50%"
-        })   
+            top: "50%" 
     }
 
-    get divStyle(){
-        return({
+    const divStyle={
             position: 'relative',
             height: '65vh',
             marginBottom: 10
-        })
     }
 
-    get buttonStyle(){
-        return({
+    const buttonStyle={
             marginTop: '1rem'
-        })
     }
 
-    get alertStyle(){
-        return({
+    const alertStyle={
             color: "red"
-        })
     }
 
-    handleOnChange=(e)=>{
-        this.setState({
-            [e.target.name]: e.target.value,       
-        })
+    const handleOnChange=({target})=>{
+        setState(prev => ({
+            ...prev,
+            [target.name]: target.value
+        }))
     }
-    handleOnSubmit = (e) => {
+
+    const handleOnSubmit = (e) => {
         e.preventDefault();
-        this.setState(prev => ({
+        setState(prev => ({
             ...prev,
             error: {
               ...prev.error,
-              email: (this.state.email.indexOf('@') > -1 && this.state.email.length >= 3 )? false : true,
-              password: this.state.password.length > 5 ? false : true
+              email: (prev.email.indexOf('@') > -1 && prev.email.length >= 3 )? false : true,
+              password: prev.password.length > 5 ? false : true
             } 
         }))
-        this.props.signIn(this.state)
+        firebase.auth().signInWithEmailAndPassword(state.email, state.password)
+        .then(()=>{console.log('zalogowano', firebase.auth().currentUser.uid, firebase.auth().currentUser.email)})
+        .catch((error)=>{
+            setState(prev=>({
+                ...prev,
+                fireError: error.message
+            })
+        )
+    })
+    console.log(state)
     }
-    render(){
         return (
-            <div className="SignIn row" style={this.divStyle} >
-                <form style={this.formStyle} onSubmit={this.handleOnSubmit}> {/*novalidate*/}
+            <div className="SignIn row" style={divStyle} >
+                <form style={formStyle} onSubmit={handleOnSubmit}> {/*novalidate*/}
+                {
+                    state.fireError ? <div>{state.fireError}</div> : null
+                }
                     <TextField 
                     type="email" 
                     label="e-mail" 
                     name="email"
                     id="email" 
-                    value={this.state.email} 
-                    onChange={this.handleOnChange}/>
-                    <p style={this.alertStyle}>{this.state.error.email && "Email powinien zawierać co najmniej 3 znaki oraz @"}</p>
+                    value={state.email} 
+                    onChange={handleOnChange}/>
+                    <p style={alertStyle}>{state.error.email && "Email powinien zawierać co najmniej 3 znaki oraz @"}</p>
                     <TextField 
                     type="password" 
                     label="Hasło" 
                     name="password"
                     id="password" 
-                    value={this.state.password}
-                    onChange={this.handleOnChange}/>
-                    <p style={this.alertStyle}>{this.state.error.password && "Hasło powinno zawierać min 5 znaków "}</p>
+                    value={state.password}
+                    onChange={handleOnChange}/>
+                    <p style={alertStyle}>{state.error.password && "Hasło powinno zawierać min 5 znaków "}</p>
                     <Button
                         type="submit"
-                        style={this.buttonStyle}
+                        style={buttonStyle}
                         variant="contained"
                         color="primary"
                         className='signUpBtn'
@@ -102,7 +110,6 @@ class SignIn extends Component {
 
             </div>
         )
-    }
 }
   
 export default SignIn
