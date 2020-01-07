@@ -69,7 +69,18 @@ const SignUp = () => {
               surname: prev.surname < 5 ? true : false
             } 
         }))
-        firebase.auth().createUserWithEmailAndPassword(state.email, state.password).then(()=>{console.log('zarejstrowano')})
+        firebase.auth().createUserWithEmailAndPassword(state.email, state.password)
+        
+        .then((resp) => {
+            const db = firebase.firestore();
+            return db.collection('users').doc(resp.user.uid).set({
+            userName: state.name,
+            userSurname: state.surname,
+            userEmail: state.email,
+            userPassword: state.password
+            })    
+        })
+        .then(()=>{console.log('zarejstrowano nowego uzytkownika')})    
         .catch((error)=>{
             setState(prev=>({
                 ...prev,
@@ -78,7 +89,6 @@ const SignUp = () => {
         )
     })
 }
-
     return (
         <div className="SignUp row" style={divStyle} >
             <form style={formStyle} onSubmit={handleOnSubmit}>
