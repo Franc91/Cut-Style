@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
+import firebase from "../config/fbConfig";
 
 const SignUp = () => {
     const [state, setState]= useState({
@@ -17,6 +18,21 @@ const SignUp = () => {
         }
 
     })
+
+    useEffect(()=>{
+        this.autListener();
+    })
+
+    const authListener = () =>{
+        firebase.auth().onAuthStateChanged((user)=>{
+            if(user){
+                setState({user})
+            }else{
+                setState({user: null})
+            }
+        })
+    }
+
     const formStyle={
             display: "flex",
             flexDirection: "column",

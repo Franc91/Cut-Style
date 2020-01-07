@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Dashboard from './component/Dashboard';
 import Header from './component/Header';
 import Footer from './component/Footer';
@@ -14,6 +14,23 @@ import {
 
 
 function App() {
+
+  const [user, setUser] = useState([{user:null}]);
+
+  useEffect(()=>{
+    this.autListener();
+  })
+
+  const authListener = () =>{
+    firebase.auth().onAuthStateChanged((user)=>{
+        if(user){
+            setUser({user})
+        }else{
+            setUser({user: null})
+        }
+    })
+  }
+
   return (
     <div className="App">
           <Router>
