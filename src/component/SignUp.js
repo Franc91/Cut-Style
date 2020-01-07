@@ -20,7 +20,7 @@ const SignUp = () => {
     })
 
     useEffect(()=>{
-        this.autListener();
+        authListener();
     })
 
     const authListener = () =>{

@@ -19,7 +19,7 @@ const SignInLinks = (props)=> {
                         Zapisy
                     </Link>
                 </MenuItem >
-                <MenuItem className="navigationList__item--signOut" onClick={props.signOut()}>
+                <MenuItem className="navigationList__item--signOut" >
                     Wyloguj
                 </MenuItem>
                 <Avatar className='orange'>NN</Avatar> 

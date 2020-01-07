@@ -13,31 +13,33 @@ import {
   Route } from 'react-router-dom';
 
 
-function App() {
-
-  const [user, setUser] = useState([{user:null}]);
-
-  useEffect(()=>{
-    this.autListener();
-  })
-
-  const authListener = () =>{
-    firebase.auth().onAuthStateChanged((user)=>{
-        if(user){
-            setUser({user})
-        }else{
-            setUser({user: null})
-        }
+  function App() {
+    const [user, setUser] = useState({ user: null})
+  
+    useEffect(()=>{
+        authListener();
     })
-  }
+  
+    const authListener=()=>{
+        firebase.auth().onAuthStateChanged((user)=>{
+            if(user){
+                setUser({user})
+            }else{
+                setUser({user:null})
+            }
+        });
+    }
 
   return (
     <div className="App">
           <Router>
             <Header />
             <Switch>
-              <Route exact path="/" component={HomePage} />
-              <Route path="/info" component={Dashboard} />
+              {
+                user? <Route path="/Dashboard" component={Dashboard} /> : <Route exact path="/" component={HomePage}/>
+              }
+              {/* <Route exact path="/" component={HomePage} />
+              <Route path="/info" component={Dashboard} /> */}
               <Route path="/registration" component={Registration} />
               <Route path="/signup" component={SignUp}/>
               <Route path="/signin" component={SignIn}/>
