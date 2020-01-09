@@ -5,13 +5,7 @@ import firebase from '../config/fbConfig'
 const Dashboard = ({ user }) => {
 
     const [ hairColor, setHairColor ] = useState([]);
-    const [color, setColor] = useState({
-        blond:'',
-        brąz:'',
-        czarne:'',
-        siwe:'',
-        rude:'',
-    });
+    const [color, setColor] = useState({colors:''});
 
     useEffect(()=>{
             const db = firebase.firestore()
@@ -33,19 +27,22 @@ const Dashboard = ({ user }) => {
 
   
     const handleOnChange=({target})=>{
-        setColor(prev => ({
-            ...prev,
+        console.log(color)
+        setColor(prev =>({
             [target.name]: target.value
         }))
     }
     console.log(color)
     return (
         <div style={{border: '1px solid red', marginBottom: 10, height:'65vh'}} id='Dashboard'>
-           <select value={color} onChange={handleOnChange}>
-               {hairColor.map((el,i)=>(
-                   <option key={i}>{el}</option>
-               ))}
-           </select>
+            <>
+            <span>{color.colors}</span>
+            <select value={color.colors} onChange={handleOnChange}>
+                {hairColor.map((el,i)=>(
+                    <option value={el} key={i}>{el}</option>
+                ))}
+            </select>
+            </>
         </div>
     )
 }
