@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import firebase from "../config/fbConfig";
+import { useHistory } from 'react-router-dom'
 
-const SignIn = () => {
+const SignIn = (props) => {                 //przekazanie propsa z rodzica
+    const history = useHistory();
     const [state, setState] = useState({
         email:'',
         password:'',
@@ -61,7 +63,11 @@ const SignIn = () => {
             } 
         }))
         firebase.auth().signInWithEmailAndPassword(state.email, state.password)
-        .then(()=>{console.log('zalogowano', firebase.auth().currentUser.uid, firebase.auth().currentUser.email, firebase.auth().currentUser.name)})
+
+        .then((user)=>{
+            props.setUser(user);
+            history.push('/')               //historia do zmiany elementów po zalgowaniu taki redirect
+            console.log('zalogowano', firebase.auth().currentUser.uid, firebase.auth().currentUser.email, firebase.auth().currentUser.name)})
         .catch((error)=>{
             setState(prev=>({
                 ...prev,
@@ -69,47 +75,47 @@ const SignIn = () => {
             })
         )
     })
-    console.log(state)
+    
     }
-        return (
-            <div className="SignIn row" style={divStyle} >
-                <form style={formStyle} onSubmit={handleOnSubmit}> {/*novalidate*/}
-                {
-                    state.fireError ? <div>{state.fireError}</div> : null
-                }
-                    <TextField 
-                    type="email" 
-                    label="e-mail" 
-                    name="email"
-                    id="email" 
-                    value={state.email} 
-                    onChange={handleOnChange}/>
-                    <p style={alertStyle}>{state.error.email && "Email powinien zawierać co najmniej 3 znaki oraz @"}</p>
-                    <TextField 
-                    type="password" 
-                    label="Hasło" 
-                    name="password"
-                    id="password" 
-                    value={state.password}
-                    onChange={handleOnChange}/>
-                    <p style={alertStyle}>{state.error.password && "Hasło powinno zawierać min 5 znaków "}</p>
-                    <Button
-                        type="submit"
-                        style={buttonStyle}
-                        variant="contained"
-                        color="primary"
-                        className='signUpBtn'
-                        endIcon={<SendIcon>send</SendIcon>}
-                    > 
-                    Zaloguj
-                    </Button>
-                    <div className="auth-error">
-                
-                    </div>
-                </form>
+    return (
+        <div className="SignIn row" style={divStyle} >
+            <form style={formStyle} onSubmit={handleOnSubmit}> {/*novalidate*/}
+            {
+                state.fireError ? <div>{state.fireError}</div> : null
+            }
+                <TextField 
+                type="email" 
+                label="e-mail" 
+                name="email"
+                id="email" 
+                value={state.email} 
+                onChange={handleOnChange}/>
+                <p style={alertStyle}>{state.error.email && "Email powinien zawierać co najmniej 3 znaki oraz @"}</p>
+                <TextField 
+                type="password" 
+                label="Hasło" 
+                name="password"
+                id="password" 
+                value={state.password}
+                onChange={handleOnChange}/>
+                <p style={alertStyle}>{state.error.password && "Hasło powinno zawierać min 5 znaków "}</p>
+                <Button
+                    type="submit"
+                    style={buttonStyle}
+                    variant="contained"
+                    color="primary"
+                    className='signUpBtn'
+                    endIcon={<SendIcon>send</SendIcon>}
+                > 
+                Zaloguj
+                </Button>
+                <div className="auth-error">
+            
+                </div>
+            </form>
 
-            </div>
-        )
+        </div>
+    )
 }
   
 export default SignIn

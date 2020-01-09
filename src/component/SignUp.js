@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import firebase from "../config/fbConfig";
+import { useHistory } from 'react-router-dom'
 
-const SignUp = () => {
+const SignUp = (props) => {
+    const history = useHistory();
     const [state, setState]= useState({
         name:'',
         surname:'',
@@ -74,11 +76,16 @@ const SignUp = () => {
         .then((resp) => {
             const db = firebase.firestore();
             return db.collection('users').doc(resp.user.uid).set({
-            userName: state.name,
-            userSurname: state.surname,
-            userEmail: state.email,
-            userPassword: state.password
+            profileName: state.name,
+            profileSurname: state.surname,
+            profileEmail: state.email,
+            profilePassword: state.password
             })    
+        })
+        .then((user)=>{
+            props.setUser(user);
+            history.push('/')               //historia do zmiany elementów po zalgowaniu taki redirect
+            console.log('zalogowano', firebase.auth().currentUser.uid, firebase.auth().currentUser.email, firebase.auth().currentUser.name)
         })
         .then(()=>{console.log('zarejstrowano nowego uzytkownika')})    
         .catch((error)=>{

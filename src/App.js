@@ -17,9 +17,8 @@ class App extends Component {
 
   state = { user: null }
 
- componentDidUpdate() {
+ componentDidMount() {
     this.authListener()
-
   }
   
   authListener=()=>{
@@ -32,22 +31,27 @@ class App extends Component {
     });
 }
 
+setUser = (user) => {
+  this.setState({ user })
+}
+
 
   render() { 
+    console.log(this.state.user)
     return ( 
       <div className="App">
-      <Router>
-        <Header />
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/info" component={Dashboard} />
-          <Route path="/registration" component={Registration} />
-          <Route path="/signup" component={SignUp}/>
-          <Route path="/signin" component={SignIn}/>
-        </Switch>
-        <Footer/>
-      </Router>
-</div>
+        <Router>
+          <Header user={this.state.user} setUser={this.setUser} /> {/* props jak chce przekazywac propsa dalej*/}
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/info" render={props => <Dashboard user={this.state.user} {...props} />} />{/* render props jak chce przekazywac propsa dalej*/}
+            <Route path="/registration" component={Registration} />
+            <Route path="/signup"render={props => <SignUp setUser={this.setUser} {...props} />}/>
+            <Route path="/signin" render={props => <SignIn setUser={this.setUser} {...props} />}/>
+          </Switch>
+          <Footer/>
+        </Router>
+      </div>
      );
   }
 }

@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { NavLink as Link } from 'react-router-dom';
 import Navbar from './layout/Navbar';
 
-export class Header extends Component {
-    get divStyle(){
-        return ({
+const Header = ({ user, setUser}) => {
+    const divStyle={
             border: '1px solid red', 
             marginBottom: 10, 
             height: '10vh', 
@@ -12,17 +11,14 @@ export class Header extends Component {
             flexDirection: 'row', 
             alignItems:"center", 
             justifyContent: 'space-between',
+    }
 
-        })
-    }
-    render() {
-        return (
-            <div style={this.divStyle}>
-                <Link to='/' className="navigation__logo">Cut&Style</Link>
-                <Navbar/>
-            </div>
-        )
-    }
+    return (
+        <div style={divStyle}>
+            <Link to='/' className="navigation__logo">Cut&Style</Link>
+            <Navbar user={user} setUser={setUser}/>
+        </div>
+    )
 }
 
 export default Header
