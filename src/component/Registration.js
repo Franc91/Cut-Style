@@ -2,25 +2,33 @@ import React, { useState, useEffect } from 'react'
 import firebase from '../config/fbConfig'
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
+import SendIcon from '@material-ui/icons/Send';
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import { FormControl, Select, MenuItem, InputLabel } from '@material-ui/core';
+import { 
+    Select, 
+    MenuItem, 
+    InputLabel, 
+    FormGroup, 
+    Button, 
+    TextField} from '@material-ui/core';
 
 const Registration = ({user}) => {
 
         const [ sexType, setSexType ] = useState([]);
-        const [ sex, setSex ] = useState(null);
+        const [ sex, setSex ] = useState('');
         const [ hairLenght, setHairLenght ] = useState([]);
-        const [ lenght, setLenght ] = useState(null);
+        const [ lenght, setLenght ] = useState('');
         const [ hairColor, setHairColor ] = useState([]);
-        const [ color, setColor] = useState(null);
+        const [ color, setColor] = useState('');
         const [ hairdressersArr, setHairDressersArr] = useState([]);
-        const [ hairdresser, setHairDressers ] = useState(null);
+        const [ hairdresser, setHairDressers ] = useState('');
+        const [ addInfo, setAddInfo ] = useState({addInfo:''});
         const db = firebase.firestore();
-        const [selectedDate, setSelectedDate] = useState(new Date());
+        const [selectedDate, setSelectedDate] = useState('');
 
         useEffect(()=>{
 
@@ -72,16 +80,43 @@ const Registration = ({user}) => {
                 )
         },[user])
 
-        const handleOnChange=({target})=>{
-            setColor(prev=> ({...prev, [target.name]:target.value}))
-            setLenght(prev=>({...prev,[target.name]:target.value}))
-            setSex(prev=> ({...prev, [target.name]:target.value}))
-            setHairDressers(prev=> ({...prev, [target.name]:target.value}))
+        const handleOnChangeSex=({target})=>{
+            setSex(prev=>({
+                ...prev, 
+                sex:target.value}
+                ));
+        }
+
+        const handleOnChangeColor=({target})=>{
+            setColor(prev=>({
+                ...prev, 
+                color:target.value}
+                ));
+        }
+
+        const handleOnChangeLenght=({target})=>{
+            setLenght(prev=>({
+                ...prev, 
+                lenght:target.value}
+                ));
+        }
+
+        const handleOnChangeHairdresser=({target})=>{
+            setHairDressers(prev=>({
+                ...prev, 
+                hairdresser:target.value}));
         }
         
-        const handleDateChange = date => {
-            setSelectedDate(date);
+        const handleDateChange = (data)=> {
+            setSelectedDate(data);
           };
+
+        const handleOnChangeAddInfo =({target})=>{
+            setAddInfo(prev=>({
+                ...prev,
+                [target.name]: target.value
+            }))
+        }
         const divStyle = {
             border: '1px solid red', 
             marginBottom: 10, 
@@ -106,79 +141,89 @@ const Registration = ({user}) => {
         //     justifyContent: 'center',
         // }
 
-        console.log(color)
+        const buttonStyle={
+            marginTop: '1rem'
+        }
+
+        console.log(color,sex,lenght,hairdresser, selectedDate)
         console.log(sex)
         return (
             <div style={divStyle} id='Dashboard'>
-                <FormControl style={formStyle}>
-                    {/* <div className='hairLenghtSelect' style={divInnerStyle}> */}
-                        <InputLabel id='sex-label'>Wybierz płeć</InputLabel>
-                        <Select labelId='sex-label' name='sex' value={sex} onChange={handleOnChange}>
-                                <MenuItem value=''></MenuItem>
-                            {sexType.map((el,i)=>(
-                                <MenuItem value={el} key={i}>{el}</MenuItem>
-                            ))}
-                        </Select>
-                </FormControl>
-                    {/* </div> */}
-                <FormControl style={formStyle}>
-                    {/* <div className='hairColorSelect'style={divInnerStyle}> */}
-                        <InputLabel id='hairLenght-label'>Wybierz długość włosów</InputLabel>
-                        <Select lableid='hairLenght-label' name='lenght' value={lenght} onChange={handleOnChange}>
-                            <MenuItem value=''></MenuItem>
-                            {hairLenght.map((el,i)=>(
-                                <MenuItem value={el} key={i}>{el}</MenuItem>
-                            ))}
-                        </Select>
-                </FormControl>
-                    {/* </div> */}
-                <FormControl style={formStyle}>
-                    {/* <div className='hairLenghtSelect'> */}
-                        <InputLabel id='hairColor-label'>Wybierz kolor włosów</InputLabel>
-                        <Select labelId='hariColor-label' name='color' value={color} onChange={handleOnChange}>
-                            <MenuItem value=''></MenuItem>  
-                            {hairColor.map((el,i)=>(
-                                <MenuItem value={el} key={i}>{el}</MenuItem>
-                            ))}
-                        </Select>
-                </FormControl>
-                    {/* </div> */}
-                <FormControl style={formStyle}>
-                    {/* <div className='hairDresserSelect'> */}
-                        <InputLabel id='hairDressers-label'>Wybierz kolor włosów</InputLabel>
-                        <Select labelId='hairDressers-label' name='hairdresser' value={hairdresser} onChange={handleOnChange}>
-                            <MenuItem value=''>Fryzjerzy</MenuItem>
-                                {hairdressersArr.map((el,i)=>(
+                <FormGroup style={formStyle}>
+                            <InputLabel id='sex-label'>Wybierz płeć</InputLabel>
+                            <Select labelId='sex-label' name='sex' value={sex.sex} onChange={handleOnChangeSex} defaultValue={''}>
+                                {sexType.map((el,i)=>(
+                                    <MenuItem value={el} name={el} key={i}>{el}</MenuItem>
+                                ))}
+                            </Select>
+                            <InputLabel id='hairLenght-label'>Wybierz długość włosów</InputLabel>
+                            <Select lableid='hairLenght-label' name='lenght' value={lenght.lenght} onChange={handleOnChangeLenght}defaultValue={''}>
+                                {hairLenght.map((el,i)=>(
                                     <MenuItem value={el} key={i}>{el}</MenuItem>
                                 ))}
                             </Select>
-                </FormControl>
-                <MuiPickersUtilsProvider utils={DateFnsUtils} style={formStyle}>
-                    <Grid container justify="space-around" direction='column' style={{width:'30%', margin: '0 auto'}}>
-
-                        <KeyboardDatePicker
-                        margin="normal"
-                        id="date-picker-dialog"
-                        label="Date picker dialog"
-                        format="MM/dd/yyyy"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
-                        />
-                        <KeyboardTimePicker
-                        margin="normal"
-                        id="time-picker"
-                        label="Time picker"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change time',
-                        }}
-                        />
-                    </Grid>
-                </MuiPickersUtilsProvider>
+                            <InputLabel id='hairColor-label'>Wybierz kolor włosów</InputLabel>
+                            <Select labelId='hariColor-label' name='color' value={color.color} onChange={handleOnChangeColor}defaultValue={''}>  
+                                {hairColor.map((el,i)=>(
+                                    <MenuItem value={el} key={i}>{el}</MenuItem>
+                                ))}
+                            </Select>
+                            <InputLabel id='hairDressers-label'>Wybierz kolor włosów</InputLabel>
+                            <Select defaultValue labelId='hairDressers-label' name='hairdresser' value={hairdresser.hairdresser} onChange={handleOnChangeHairdresser}defaultValue={''}>
+                                    {hairdressersArr.map((el,i)=>(
+                                        <MenuItem value={el} key={i}>{el}</MenuItem>
+                                    ))}
+                            </Select>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <Grid container justify="space-around" direction='column' >
+                        <InputLabel id='date-picker-dialog'>Wybierz datę wizyty</InputLabel>
+                            <KeyboardDatePicker
+                            margin="normal"
+                            labelId="date-picker-dialog"
+                            id="date-picker-dialog"
+                            format="dd/MM/yyyy"
+                            value={selectedDate}
+                            onChange={handleDateChange}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                            }}
+                            />
+                        <InputLabel id='time-picker-label'>Wybierz datę wizyty</InputLabel>
+                            <KeyboardTimePicker
+                            margin="normal"
+                            ampm={false}
+                            id="time-picker"
+                            labelId="time-picker-label"
+                            value={selectedDate}
+                            onChange={handleDateChange}
+                            minutesStep={15}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change time',
+                            }}
+                            />
+                        <TextField
+                        type="text" 
+                        labelId="AddInfo" 
+                        name="addInfo"
+                        id="addInfo" 
+                        value={addInfo} 
+                        onChange={handleOnChangeAddInfo}
+                        row='5'
+                        size='medium'/>
+                        </Grid>
+                    </MuiPickersUtilsProvider>
+                    <InputLabel id='AddInfo'>Dodatkowe informacje</InputLabel>
+                    <Button
+                    type="submit"
+                    style={buttonStyle}
+                    variant="contained"
+                    color="primary"
+                    className='signUpBtn'
+                    endIcon={<SendIcon>Zapisz się</SendIcon>}
+                    > 
+                    Zapisz się
+                    </Button>
+                </FormGroup>
             </div>
                 // <div className='hairLenghtSelect'>
                 //     <span>{sexs.sex}</span>
