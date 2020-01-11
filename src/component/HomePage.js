@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export class HomePage extends Component {
-    render() {
+const HomePage = ({user}) => {
         return (
-            <div style={{border: '1px solid red', marginBottom: 10, height:'65vh'}} id='HomePage'>
-                LandingPage
+            <div style={{border: '1px solid red', marginBottom: 10, height:'65vh'}} id='Dashboard'>
+                {
+                    user ? <div>Witaj, prosze wypelnic formularz</div> : <div> Zaloguj się aby wypelnic forularz</div>
+                }
             </div>
         )
-    }
 }
 
 export default HomePage

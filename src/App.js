@@ -29,24 +29,23 @@ class App extends Component {
           this.setState({user:null})
         }
     });
-}
+  }
 
-setUser = (user) => {
-  this.setState({ user })
-}
-
+  setUser = (user) => {
+    this.setState({ user })
+  }
 
   render() { 
-    console.log(this.state.user)
+    const { user } = this.state
     return ( 
       <div className="App">
         <Router>
-          <Header user={this.state.user} setUser={this.setUser} /> {/* props jak chce przekazywac propsa dalej*/}
+          <Header user={user} setUser={this.setUser} /> {/* props jak chce przekazywac propsa dalej*/}
           <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route path="/info" render={props => <Dashboard user={this.state.user} {...props} />} />{/* render props jak chce przekazywac propsa dalej*/}
-            <Route path="/registration" component={Registration} />
-            <Route path="/signup"render={props => <SignUp setUser={this.setUser} {...props} />}/>
+            <Route exact path="/" render={props => <HomePage user={user} {...props} />} />
+            <Route path="/info" render={props => <Dashboard user={user} setUser = {this.setUser} {...props} />} />   {/* render props jak chce przekazywac propsa dalej*/}
+            <Route path="/registration" render={props => <Registration user={user} {...props} />} />
+            <Route path="/signup"render={props => <SignUp setUser={this.setUser} {...props} />}/> 
             <Route path="/signin" render={props => <SignIn setUser={this.setUser} {...props} />}/>
           </Switch>
           <Footer/>

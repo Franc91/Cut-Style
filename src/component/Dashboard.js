@@ -1,48 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import firebase from '../config/fbConfig'
 
 
-const Dashboard = ({ user }) => {
+const Dashboard = ({user}) => {
 
-    const [ hairColor, setHairColor ] = useState([]);
-    const [color, setColor] = useState({colors:''});
+    // const [ name, setName ] = useState(null);
+    // const [ surname, setSurname ] = useState(null);
+    // const uid = user.uid
+    // const db = firebase.firestore()
 
-    useEffect(()=>{
-            const db = firebase.firestore()
-            db.collection('hairType')
-            .doc('hairColor')
-            .get()
-            .then(doc =>{
-                console.log(doc)
-                if (!doc.exists) {
-                    console.log('No such document!');
-                  } else {
-                    setHairColor(doc.data().colors)
-                  }
-                }
-            )
-    },[user])
+    // useEffect(()=>{
 
-    console.log(hairColor) 
+    //     if(uid){
+    //         db.collection('users')
+    //         .doc(uid)
+    //         .get()
+    //         .then(doc =>{
+    //             // console.log(doc, uid)
+    //             if (!doc.exists) {
+    //                 console.log('No such document!');
+    //               } else {
+    //                 setName(doc.data().profileName)
+    //                 setSurname (doc.data().profileSurname)
+    //               }
+    //             }
+    //         )
+    //     }
+    // },[])
+    // console.log(name)
 
-  
-    const handleOnChange=({target})=>{
-        console.log(color)
-        setColor(prev =>({
-            [target.name]: target.value
-        }))
-    }
-    console.log(color)
     return (
         <div style={{border: '1px solid red', marginBottom: 10, height:'65vh'}} id='Dashboard'>
-            <>
-            <span>{color.colors}</span>
-            <select value={color.colors} onChange={handleOnChange}>
-                {hairColor.map((el,i)=>(
-                    <option value={el} key={i}>{el}</option>
-                ))}
-            </select>
-            </>
+            <div className='userInfo' >
+                {/* `Imie: ${profileName} Nazwisko: ${profilSurname}` */}
+
+                info
+
+            </div>
         </div>
     )
 }

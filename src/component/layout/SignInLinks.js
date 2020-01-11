@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink as Link } from 'react-router-dom';
 import { MenuList, MenuItem, Avatar } from '@material-ui/core';
+import { useHistory } from 'react-router-dom'
 import firebase from '../../config/fbConfig'
 
 const SignInLinks = ({user, setUser})=> {
     const [name, setName] = useState(null);
     const [surname, setSurname] = useState(null);
+    const history = useHistory();
+    const uid = user.uid;
 
     const handleOnClick = ()=>{
-        firebase.default.auth().signOut();
-        setUser(null)
-        console.log('wylogowano')
+        firebase.default.auth().signOut()
+        .then(()=>{
+            setUser(null)
+            history.push('/')
+            console.log('wylogowano')
+        })
     }
-    const uid = user.uid;
-    // console.log(typeof uid)
 
     useEffect(()=>{
         if(uid){
