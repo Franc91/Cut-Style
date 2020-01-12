@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import firebase from '../config/fbConfig'
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
-import SendIcon from '@material-ui/icons/Send';
+import SendIcon from '@material-ui/icons/Send'
+import { useHistory } from 'react-router-dom';
 import {
   MuiPickersUtilsProvider,
   DateTimePicker
@@ -22,9 +23,9 @@ const Registration = ({user}) => {
         const [ hairLenght, setHairLenght ] = useState([]);;
         const [ hairColor, setHairColor ] = useState([]);
         const [ hairdressersArr, setHairDressersArr] = useState([]);
-        // const [ addInfo, setAddInfo ] = useState({addInfo:''});
         const db = firebase.firestore();
         const [selectedDate, setSelectedDate ] = useState(null)
+        const history = useHistory();
 
         const [ state, setState ] = useState({
             sex:'',
@@ -94,33 +95,31 @@ const Registration = ({user}) => {
                 [name]: e.target.value
             })
         }
+        const handleOnSubmit = (e) =>{
+            e.preventDefault()
+            if(user != null){
+                db.collection('users')
+                .doc(user.uid)
+                .set({regData:{
+                        sex: state.sex,
+                        hairColor: state.color,
+                        hairLenght: state.lenght,
+                        hairdresser: state.hairdresser,
+                        dateVisit: selectedDate,
+                        addInfo: state.addInfo}
+                     },{merge: true}
+                ) 
+                .then(()=>{
+                    history.push('/info')               //historia do zmiany elementów po zalgowaniu taki redirect
+                    console.log('zapisano')
+                })
+                .catch(()=>{
+                    console.log('dupa')
+                })
+            }
 
-        // const handleOnChangeColor=({target})=>{
-        //     setColor(prev=>({
-        //         ...prev, 
-        //         color:target.value}
-        //         ));
-        // }
+        }
 
-        // const handleOnChangeLenght=({target})=>{
-        //     setLenght(prev=>({
-        //         ...prev, 
-        //         lenght:target.value}
-        //         ));
-        // }
-
-        // const handleOnChangeHairdresser=({target})=>{
-        //     setHairDressers(prev=>({
-        //         ...prev, 
-        //         hairdresser:target.value}));
-        // }
-
-        // const handleOnChangeAddInfo =({target})=>{
-        //     setAddInfo(prev=>({
-        //         ...prev,
-        //         [target.name]: target.value
-        //     }))
-        // }
         const divStyle = {
             border: '1px solid red', 
             marginBottom: 10, 
@@ -131,93 +130,86 @@ const Registration = ({user}) => {
             justifyContent: 'center'
         }
         const formStyle = {
-            // display: 'flex', 
-            // flexDirection: 'column', 
-            // alignItems:'center',
-            // justifyContent: 'center',
             width: '30%',
             margin: '0 auto'
         }
-        // const divInnerStyle = {
-        //     display: 'flex', 
-        //     flexDirection: 'column', 
-        //     alignItems:'center',
-        //     justifyContent: 'center',
-        // }
+
 
         const buttonStyle={
             marginTop: '1rem'
         }
 
         console.log(state.color,state.sex,state.lenght,state.hairdresser, selectedDate, state.addInfo)
-        console.log(state.sex)
+
         return (
             <div style={divStyle} id='Dashboard'>
-                <FormGroup style={formStyle}>
-                    <FormControl>
-                        <InputLabel htmlFor='sex-label'>Wybierz płeć</InputLabel>
-                                <Select inputProps={{name:'sex', id:'sex-label' }} value={state.sex} onChange={handleOnChange('sex')}>
-                                    {sexType.map((el,i)=>(
-                                        <MenuItem value={el} name={el} key={i}>{el}</MenuItem>
-                                    ))}
-                                </Select>
-                    </FormControl>
-                    <FormControl>
-                        <InputLabel htmlFor='hairLenght-label'>Wybierz długość włosów</InputLabel>
-                                <Select inputProps={{name:'lenght', id:'hairLenght-label' }} value={state.lenght} onChange={handleOnChange('lenght')}>
-                                    {hairLenght.map((el,i)=>(
-                                        <MenuItem value={el} key={i}>{el}</MenuItem>
-                                    ))}
-                                </Select>
-                    </FormControl>
-                    <FormControl>
-                        <InputLabel htmlFor='hairColor-label'>Wybierz kolor włosów</InputLabel>
-                                <Select inputProps={{name:'color', id:'hairColor-label'}} value={state.color} onChange={handleOnChange('color')}>  
-                                    {hairColor.map((el,i)=>(
-                                        <MenuItem value={el} key={i}>{el}</MenuItem>
-                                    ))}
-                                </Select>
-                    </FormControl>
-                    <FormControl>
-                        <InputLabel htmlFor='hairDressers-label'>Wybierz kolor włosów</InputLabel>
-                                <Select inputProps={{name:'hairdresser', id:'hairDressers-label'}} value={state.hairdresser} onChange={handleOnChange('hairdresser')}>
-                                        {hairdressersArr.map((el,i)=>(
+                <form onSubmit={handleOnSubmit}>
+                    <FormGroup style={formStyle} onSubmit={handleOnSubmit}>
+                        <FormControl>
+                            <InputLabel htmlFor='sex-label'>Wybierz płeć</InputLabel>
+                                    <Select inputProps={{name:'sex', id:'sex-label' }} value={state.sex} onChange={handleOnChange('sex')}>
+                                        {sexType.map((el,i)=>(
+                                            <MenuItem value={el} name={el} key={i}>{el}</MenuItem>
+                                        ))}
+                                    </Select>
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel htmlFor='hairLenght-label'>Wybierz długość włosów</InputLabel>
+                                    <Select inputProps={{name:'lenght', id:'hairLenght-label' }} value={state.lenght} onChange={handleOnChange('lenght')}>
+                                        {hairLenght.map((el,i)=>(
                                             <MenuItem value={el} key={i}>{el}</MenuItem>
                                         ))}
-                                </Select>
-                    </FormControl>     
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <Grid container justify="space-around" direction='column' >
-                            <DateTimePicker
-                                autoOk
-                                ampm={false}
-                                value={selectedDate}
-                                onChange={handleDateChange}
-                                label="Wybierz datę i godzinę wizyty"
+                                    </Select>
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel htmlFor='hairColor-label'>Wybierz kolor włosów</InputLabel>
+                                    <Select inputProps={{name:'color', id:'hairColor-label'}} value={state.color} onChange={handleOnChange('color')}>  
+                                        {hairColor.map((el,i)=>(
+                                            <MenuItem value={el} key={i}>{el}</MenuItem>
+                                        ))}
+                                    </Select>
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel htmlFor='hairDressers-label'>Wybierz kolor włosów</InputLabel>
+                                    <Select inputProps={{name:'hairdresser', id:'hairDressers-label'}} value={state.hairdresser} onChange={handleOnChange('hairdresser')}>
+                                            {hairdressersArr.map((el,i)=>(
+                                                <MenuItem value={el} key={i}>{el}</MenuItem>
+                                            ))}
+                                    </Select>
+                        </FormControl>     
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <Grid container justify="space-around" direction='column' >
+                                <DateTimePicker
+                                    autoOk
+                                    ampm={false}
+                                    value={selectedDate}
+                                    onChange={handleDateChange}
+                                    label="Wybierz datę i godzinę wizyty"
+                                />
+                            </Grid>
+                        </MuiPickersUtilsProvider>
+                        <TextField
+                            id="Addinfo"
+                            name="addInfo"
+                            label="Dodatkowe informacje"
+                            multiline
+                            rowsMax="4"
+                            value={state.addInfo}
+                            onChange={handleOnChange('addInfo')}
                             />
-                        </Grid>
-                    </MuiPickersUtilsProvider>
-                    <TextField
-                        id="Addinfo"
-                        name="addInfo"
-                        label="Dodatkowe informacje"
-                        multiline
-                        rowsMax="4"
-                        value={state.addInfo}
-                        onChange={handleOnChange('addInfo')}
-                        />
 
-                    <Button
-                    type="submit"
-                    style={buttonStyle}
-                    variant="contained"
-                    color="primary"
-                    className='signUpBtn'
-                    endIcon={<SendIcon>Zapisz się</SendIcon>}
-                    > 
-                    Zapisz się
-                    </Button>
-                </FormGroup>
+                        <Button
+                        type="submit"
+                        style={buttonStyle}
+                        variant="contained"
+                        color="primary"
+                        className='signUpBtn'
+                        endIcon={<SendIcon>Zapisz się</SendIcon>}
+                        > 
+                        Zapisz się
+                        </Button>
+                    </FormGroup>
+                </form>
             </div>
         )
 }

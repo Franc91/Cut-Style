@@ -71,8 +71,8 @@ const SignUp = (props) => {
               surname: prev.surname < 5 ? true : false
             } 
         }))
+
         firebase.auth().createUserWithEmailAndPassword(state.email, state.password)
-        
         .then((resp) => {
             const db = firebase.firestore();
             return db.collection('users').doc(resp.user.uid).set({

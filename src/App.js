@@ -43,7 +43,7 @@ class App extends Component {
           <Header user={user} setUser={this.setUser} /> {/* props jak chce przekazywac propsa dalej*/}
           <Switch>
             <Route exact path="/" render={props => <HomePage user={user} {...props} />} />
-            <Route path="/info" render={props => <Dashboard user={user} setUser = {this.setUser} {...props} />} />   {/* render props jak chce przekazywac propsa dalej*/}
+            <Route path="/info" render={props => <Dashboard user={user} {...props} />} />   {/* render props jak chce przekazywac propsa dalej*/}
             <Route path="/registration" render={props => <Registration user={user} {...props} />} />
             <Route path="/signup"render={props => <SignUp setUser={this.setUser} {...props} />}/> 
             <Route path="/signin" render={props => <SignIn setUser={this.setUser} {...props} />}/>
