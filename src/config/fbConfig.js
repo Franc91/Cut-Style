@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';  
-  
+import 'firebase/auth'
+import 'firebase/firestore'
+
   const firebaseConfig = {
     apiKey: "AIzaSyDleF7RKXV6Lo0VNgrKoEY3t-33oLo9qrs",
     authDomain: "haircutbase-ecd78.firebaseapp.com",
@@ -16,6 +16,5 @@ import 'firebase/auth';
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 
-  // firebase.firestore().settings({ timestampsInSnapshots: true})
 
   export default firebase;

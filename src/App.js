@@ -1,34 +1,58 @@
-import React from 'react';
-import Home from './component/Home'
-import Application from './component/application/Application';
-import ThemeContextProvider from './contexts/ThemeContext'
-import AuthContextProvider from './contexts/AuthContext';
-
-
+import React, { Component } from 'react';
+import Dashboard from './component/Dashboard';
+import Header from './component/Header';
+import Footer from './component/Footer';
+import Registration from './component/Registration'
+import HomePage from './component/HomePage'
+import SignIn from './component/SignIn';
+import SignUp from './component/SignUp';
+import firebase from "./config/fbConfig";
 import { 
   HashRouter as Router,
   Switch,
-  Route } from 'react-router-dom';
+  Route,
+  } from 'react-router-dom';
 
+class App extends Component {
 
+  state = { user: null }
 
-function App() {
-  return (
-    <>
-    <div className="App">
-      <ThemeContextProvider>
-        <AuthContextProvider>
-          <Router>
-            <Switch>
-              <Route exact path="/" component={Home} /> 
-              <Route path="/app" component={Application} />
-            </Switch>
-          </Router>
-        </AuthContextProvider>
-      </ThemeContextProvider>
-    </div>
-    </>
-  );
+ componentDidMount() {
+    this.authListener()
+  }
+  
+  authListener=()=>{
+    firebase.auth().onAuthStateChanged((user)=>{
+        if(user){
+            this.setState({user})
+        }else{
+          this.setState({user:null})
+        }
+    });
+  }
+
+  setUser = (user) => {
+    this.setState({ user })
+  }
+
+  render() { 
+    const { user } = this.state
+    return ( 
+      <div className="App">
+        <Router>
+          <Header user={user} setUser={this.setUser} /> {/* props jak chce przekazywac propsa dalej*/}
+          <Switch>
+            <Route exact path="/" render={props => <HomePage user={user} {...props} />} />
+            <Route path="/info" render={props => <Dashboard user={user} setUser = {this.setUser} {...props} />} />   {/* render props jak chce przekazywac propsa dalej*/}
+            <Route path="/registration" render={props => <Registration user={user} {...props} />} />
+            <Route path="/signup"render={props => <SignUp setUser={this.setUser} {...props} />}/> 
+            <Route path="/signin" render={props => <SignIn setUser={this.setUser} {...props} />}/>
+          </Switch>
+          <Footer/>
+        </Router>
+      </div>
+     );
+  }
 }
-
+ 
 export default App;

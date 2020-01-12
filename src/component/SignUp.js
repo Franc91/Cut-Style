@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
+import firebase from "../config/fbConfig";
+import { useHistory } from 'react-router-dom'
 
-const SignUp = () => {
+const SignUp = (props) => {
+    const history = useHistory();
     const [state, setState]= useState({
         name:'',
         surname:'',
         email:'',
         password:'',
-        rePassword:'',
+        rePassword:'', 
+        fireError: '',
+        loginBtn: true, 
         error:{
             name: false,
             surname: false,
@@ -17,6 +22,7 @@ const SignUp = () => {
         }
 
     })
+
     const formStyle={
             display: "flex",
             flexDirection: "column",
@@ -32,7 +38,8 @@ const SignUp = () => {
     const divStyle ={
         
             position: 'relative',
-            height: '40rem',
+            height: '65vh',
+            marginBottom: 10
     }
 
     const buttonStyle={
@@ -53,20 +60,48 @@ const SignUp = () => {
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
+        console.log(state)
         setState(prev => ({
             ...prev,
             error: {
               ...prev.error,
               email: (prev.email.indexOf('@') > -1|| prev.email.length >= 3 )? false : true,
-              password: (prev.password === prev.rePassword || prev.password < 5) ? true : false ,
+              password: (prev.password === prev.rePassword && prev.password.length < 5) ? true : false ,
               name: prev.name < 5 ? true : false,
               surname: prev.surname < 5 ? true : false
             } 
         }))
-    }
+        firebase.auth().createUserWithEmailAndPassword(state.email, state.password)
+        
+        .then((resp) => {
+            const db = firebase.firestore();
+            return db.collection('users').doc(resp.user.uid).set({
+            profileName: state.name,
+            profileSurname: state.surname,
+            profileEmail: state.email,
+            profilePassword: state.password
+            })    
+        })
+        .then((user)=>{
+            props.setUser(user);
+            history.push('/')               //historia do zmiany elementów po zalgowaniu taki redirect
+            console.log('zalogowano', firebase.auth().currentUser.uid, firebase.auth().currentUser.email, firebase.auth().currentUser.name)
+        })
+        .then(()=>{console.log('zarejstrowano nowego uzytkownika')})    
+        .catch((error)=>{
+            setState(prev=>({
+                ...prev,
+                fireError: error.message
+            })
+        )
+    })
+}
     return (
         <div className="SignUp row" style={divStyle} >
             <form style={formStyle} onSubmit={handleOnSubmit}>
+                {
+                    state.fireError ? <div>{state.fireError}</div> : null
+                }
                 <TextField 
                 type="text" 
                 label="Imię" 
