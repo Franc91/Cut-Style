@@ -203,7 +203,7 @@ const Registration = ({user}) => {
                         style={buttonStyle}
                         variant="contained"
                         color="primary"
-                        className='signUpBtn'
+                        className='saveDataBtn'
                         endIcon={<SendIcon>Zapisz się</SendIcon>}
                         > 
                         Zapisz się
