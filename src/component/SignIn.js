@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { TextField, Button } from '@material-ui/core';
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import SendIcon from '@material-ui/icons/Send';
 import firebase from "../config/fbConfig";
 import { useHistory } from 'react-router-dom'
 
 const SignIn = (props) => {                 //przekazanie propsa z rodzica
     const history = useHistory();
-    const [open, setOpen] = useState(false);
     const [state, setState] = useState({
         email:'',
         password:'',
@@ -53,10 +50,6 @@ const SignIn = (props) => {                 //przekazanie propsa z rodzica
             ...prev,
             [target.name]: target.value
         }))
-    }
-
-    const handleClose = () => {
-        setOpen(false);
     }
 
     const handleOnSubmit = (e) => {
