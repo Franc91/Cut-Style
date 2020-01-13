@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import firebase from "../config/fbConfig";
@@ -14,13 +14,6 @@ const SignUp = (props) => {
         rePassword:'', 
         fireError: '',
         loginBtn: true, 
-        error:{
-            name: false,
-            surname: false,
-            email: false,
-            password:false
-        }
-
     })
 
     const formStyle={
@@ -51,6 +44,12 @@ const SignUp = (props) => {
             color: "red"
     }
 
+    const nameErr = (state.name.length > 5 )? true : false;
+    const surNameErr = ( state.surname.length > 3) ? true : false;
+    const mailErr = (state.email.indexOf('@') > -1 && state.email.length >= 3 )? true : false;
+    const passErr = (state.password === state.rePassword && state.password.length > 5 ) ? true : false;
+    const loginBtn = (nameErr & surNameErr & mailErr & passErr)? false : true 
+
     const handleOnChange=({target})=>{
         setState(prev => ({
             ...prev,
@@ -61,16 +60,6 @@ const SignUp = (props) => {
     const handleOnSubmit = (e) => {
         e.preventDefault();
         console.log(state)
-        setState(prev => ({
-            ...prev,
-            error: {
-              ...prev.error,
-              email: (prev.email.indexOf('@') > -1|| prev.email.length >= 3 )? false : true,
-              password: (prev.password === prev.rePassword && prev.password.length < 5) ? true : false ,
-              name: prev.name < 5 ? true : false,
-              surname: prev.surname < 5 ? true : false
-            } 
-        }))
 
         firebase.auth().createUserWithEmailAndPassword(state.email, state.password)
         .then((resp) => {
@@ -110,7 +99,7 @@ const SignUp = (props) => {
                 onChange={handleOnChange}/>
                 <p style={alertStyle}>
                     {
-                        state.error.name && "Imie powinno mieć wiecej niż 5 znaków"
+                       (!nameErr && state.name.length) ? "Imie powinno mieć wiecej niż 5 znaków" : null
                     }
                 </p>
                 <TextField 
@@ -121,7 +110,7 @@ const SignUp = (props) => {
                 onChange={handleOnChange}/>
                 <p style={alertStyle}>
                     {
-                        state.error.surname && "Nazwisko powinno mieć wiecej niż 5 znaków"
+                        (!surNameErr && state.surname.length)? "Nazwisko powinno mieć wiecej niż 5 znaków": null
                     }
                 </p>
                 <TextField 
@@ -132,7 +121,7 @@ const SignUp = (props) => {
                 onChange={handleOnChange}/>
                 <p style={alertStyle}>
                     {
-                        state.error.email && "Email powinien zawierać co najmniej 3 znaki oraz @"
+                        (!mailErr && state.email.length)? "Email powinien zawierać co najmniej 3 znaki oraz @": null
                     }
                 </p>
                 <TextField 
@@ -143,7 +132,7 @@ const SignUp = (props) => {
                 onChange={handleOnChange}/>
                 <p style={alertStyle}>
                     {
-                        state.error.password && "Hasła nie są takie same lub hasło zawiera mniej niż 5 znaków"
+                        (!passErr && state.password.length)? "Hasła nie są takie same lub hasło zawiera mniej niż 5 znaków": null
                     }
                 </p>
                 <TextField 
@@ -155,13 +144,14 @@ const SignUp = (props) => {
                 <p style={alertStyle}></p>
                 <Button
                     type="submit"
+                    disabled={loginBtn} 
                     style={buttonStyle}
                     variant="contained"
                     color="primary"
                     className='signUpBtn'
                     endIcon={<SendIcon>send</SendIcon>}
-                > 
-                Zarejestruj
+                >
+                    Zarejestruj
                 </Button>
             </form>
         </div>

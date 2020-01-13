@@ -85,22 +85,19 @@ const Registration = ({user}) => {
             )
     },[user])
 
-    // const handleDateChange = () =>{
-    //     setSelectedDate( new Date())
-    // }
-
     const handleOnChange= name => e =>{
         setState ({
             ...state,
             [name]: e.target.value
         })
     }
-
+    
     const handleOnSubmit = (e) =>{
+        console.log(user, 'dupa', firebase.auth().currentUser.uid)
         e.preventDefault()
-        if(user != null){
+        if(firebase.auth().currentUser !== null){
             db.collection('users')
-            .doc(user.uid)
+            .doc(firebase.auth().currentUser.uid)
             .set({regData:{
                     sex: state.sex,
                     hairColor: state.color,
@@ -109,7 +106,7 @@ const Registration = ({user}) => {
                     dateVisit: selectedDate,
                     addInfo: state.addInfo
                     }
-                    },{merge: true}
+                },{merge: true}
             ) 
             .then(()=>{
                 history.push('/info')               //historia do zmiany elementów po zalgowaniu taki redirect
@@ -141,7 +138,7 @@ const Registration = ({user}) => {
         marginTop: '1rem'
     }
 
-    console.log(state.color,state.sex,state.lenght,state.hairdresser, state.addInfo)
+    console.log(state.color,state.sex,state.lenght,state.hairdresser, state.addInfo, selectedDate)
 
     return (
         <div style={divStyle} id='Dashboard'>
@@ -182,10 +179,10 @@ const Registration = ({user}) => {
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid container justify="space-around" direction='column' >
                             <DateTimePicker
-                                // autoOk
+                                autoOk
+                                minutesStep={15}
                                 ampm={false}
                                 value={selectedDate}
-                                number={15}
                                 onChange={handleDateChange}
                                 label="Wybierz datę i godzinę wizyty"
                             />

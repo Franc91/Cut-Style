@@ -5,6 +5,7 @@ import firebase from "../config/fbConfig";
 import { useHistory } from 'react-router-dom'
 
 const SignIn = (props) => {                 //przekazanie propsa z rodzica
+    
     const history = useHistory();
     const [state, setState] = useState({
         email:'',
