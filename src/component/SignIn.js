@@ -70,11 +70,6 @@ const SignIn = (props) => {                 //przekazanie propsa z rodzica
             } 
         }))
         firebase.auth().signInWithEmailAndPassword(state.email, state.password)
-        .then(()=>(
-        <Backdrop open={open} onClick={handleClose}>
-            <CircularProgress color="inherit" />
-        </Backdrop>
-        )) 
         .then((user)=>{
             props.setUser(user);
             history.push('/')               //historia do zmiany elementów po zalgowaniu taki redirect
