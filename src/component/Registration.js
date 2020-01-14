@@ -120,13 +120,14 @@ const Registration = ({user}) => {
     }
 
     const divStyle = {
-        border: '1px solid red', 
+        borderRadius: '2rem',
         marginBottom: 10, 
-        height:'65vh', 
+        height:'70vh', 
         display: 'flex', 
         flexDirection: 'column', 
         alignContent:'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: '#CFDAE6'
     }
     const formStyle = {
         width: '30%',
@@ -135,7 +136,8 @@ const Registration = ({user}) => {
 
 
     const buttonStyle={
-        marginTop: '1rem'
+        marginTop: '1rem',
+        backgroundColor: '#393D40'
     }
 
     console.log(state.color,state.sex,state.lenght,state.hairdresser, state.addInfo, selectedDate)

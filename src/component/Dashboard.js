@@ -35,9 +35,15 @@ const Dashboard = ({user}) => {
 
     console.log(hairColor)
     console.log(dateVisit)
+    const divStyle={
+        borderRadius: '2rem',
+        marginBottom: 10, 
+        height:'70vh',
+        backgroundColor: '#CFDAE6'
+    }
 
     return (
-        <div style={{border: '1px solid red', marginBottom: 10, height:'65vh'}} id='Dashboard'>
+        <div style={divStyle} id='Dashboard'>
             <div className='userInfo' >
                 Imie: {name},
                 Nazwisko: {surname},

@@ -9,7 +9,6 @@ const SignInLinks = ({user, setUser})=> {
     const [surname, setSurname] = useState(null);
     const history = useHistory();
     const uid = user.uid;
-
     const handleOnClick = ()=>{
         firebase.default.auth().signOut()
         .then(()=>{
@@ -17,6 +16,18 @@ const SignInLinks = ({user, setUser})=> {
             history.push('/')
             console.log('wylogowano')
         })
+    }
+    const btnStyle={
+        fontSize: '2rem',
+        color: '#393D40'
+
+    }
+    const linkStyle = {
+
+        color:'#022840', 
+        textDecoration:'none', 
+        fontSize: '2rem',
+        color: '#393D40'
     }
 
     useEffect(()=>{
@@ -38,29 +49,31 @@ const SignInLinks = ({user, setUser})=> {
             )
         }
     },[user])
-    console.log(name)
-    console.log(surname)
 
-    return (
+    
+
+    return( 
             <MenuList className='navigation' style={{display:'flex', flexDirection: 'row', alignItems:'center', justifyContent:'center'}}>
-                <MenuItem  className="navigationList__item--Info">
+                <MenuItem  style={btnStyle} className="navigationList__item--Info">
                     <Link 
+                    style={linkStyle}
                     to="/info"
                     >
                         Informacje
                     </Link>
                 </MenuItem>
-                <MenuItem  className="navigationList__item--registration">
+                <MenuItem  style={btnStyle} className="navigationList__item--registration">
                     <Link 
+                    style={linkStyle}
                     to="/registration"
                     >
                         Zapisy
                     </Link>
                 </MenuItem >
-                <MenuItem className="navigationList__item--signOut" onClick={handleOnClick}>
+                <MenuItem style={btnStyle} className="navigationList__item--signOut" onClick={handleOnClick}>
                     Wyloguj
-                </MenuItem>
-                    <Avatar className='orange'>{name}</Avatar> 
+                </MenuItem >
+                    <Avatar style={{fontSize: '2rem', backgroundColor:'#393D40'}}alt= {name} src='./a' />
                 </MenuList>
     );
 }

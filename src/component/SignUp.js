@@ -29,10 +29,11 @@ const SignUp = (props) => {
     }
 
     const divStyle ={
-        
-            position: 'relative',
-            height: '65vh',
-            marginBottom: 10
+        borderRadius: '2rem',
+        backgroundColor: '#CFDAE6',
+        position: 'relative',
+        height: '70vh',
+        marginBottom: 10
     }
 
     const buttonStyle={

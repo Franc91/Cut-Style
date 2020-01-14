@@ -20,30 +20,31 @@ const SignIn = (props) => {                 //przekazanie propsa z rodzica
 
     })
     const formStyle={
-
-            display: "flex",
-            flexDirection: "column",
-            alignItem: "center",
-            justifyContent: "center",
-            position: "absolute",
-            left: "50%",
-            width: "50%",
-            transform: "translate(-50%,-50%)",
-            top: "50%" 
+        display: "flex",
+        flexDirection: "column",
+        alignItem: "center",
+        justifyContent: "center",
+        position: "absolute",
+        left: "50%",
+        width: "50%",
+        transform: "translate(-50%,-50%)",
+        top: "50%" 
     }
 
     const divStyle={
-            position: 'relative',
-            height: '65vh',
-            marginBottom: 10
+        borderRadius: '2rem',
+        position: 'relative',
+        height: '70vh',
+        marginBottom: 10,
+        backgroundColor: '#CFDAE6'
     }
 
     const buttonStyle={
-            marginTop: '1rem'
+        marginTop: '1rem'
     }
 
     const alertStyle={
-            color: "red"
+        color: "red"
     }
 
     const handleOnChange=({target})=>{
