@@ -6,7 +6,8 @@ const SignInLinks = ()=> {
 
     const btnStyle={
         fontSize: '2rem',
-        color: '#393D40'
+        color: '#393D40',
+        borderRadius: '2rem'
 
     }
     const linkStyle = {

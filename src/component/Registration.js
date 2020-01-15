@@ -107,7 +107,7 @@ const Registration = ({user}) => {
                     addInfo: state.addInfo
                     }
                 },{merge: true}
-            ) 
+            )
             .then(()=>{
                 history.push('/info')               //historia do zmiany elementów po zalgowaniu taki redirect
                 console.log('zapisano')
@@ -119,22 +119,6 @@ const Registration = ({user}) => {
 
     }
 
-    const divStyle = {
-        borderRadius: '2rem',
-        marginBottom: 10, 
-        height:'70vh', 
-        display: 'flex', 
-        flexDirection: 'column', 
-        alignContent:'center',
-        justifyContent: 'center',
-        backgroundColor: '#CFDAE6'
-    }
-    const formStyle = {
-        width: '30%',
-        margin: '0 auto'
-    }
-
-
     const buttonStyle={
         marginTop: '1rem',
         backgroundColor: '#393D40'
@@ -143,9 +127,9 @@ const Registration = ({user}) => {
     console.log(state.color,state.sex,state.lenght,state.hairdresser, state.addInfo, selectedDate)
 
     return (
-        <div style={divStyle} id='Dashboard'>
-            <form onSubmit={handleOnSubmit}>
-                <FormGroup style={formStyle} onSubmit={handleOnSubmit}>
+        <div className='registration divStyle'>
+            <form className='registrationForm formStyle' onSubmit={handleOnSubmit}>
+                <FormGroup onSubmit={handleOnSubmit}>
                     <FormControl>
                         <InputLabel htmlFor='sex-label'>Wybierz płeć</InputLabel>
                                 <Select inputProps={{name:'sex', id:'sex-label' }} value={state.sex} onChange={handleOnChange('sex')}>

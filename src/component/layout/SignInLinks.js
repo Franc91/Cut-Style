@@ -6,7 +6,6 @@ import firebase from '../../config/fbConfig'
 
 const SignInLinks = ({user, setUser})=> {
     const [name, setName] = useState(null);
-    const [surname, setSurname] = useState(null);
     const history = useHistory();
     const uid = user.uid;
     const handleOnClick = ()=>{
@@ -19,12 +18,12 @@ const SignInLinks = ({user, setUser})=> {
     }
     const btnStyle={
         fontSize: '2rem',
-        color: '#393D40'
+        color: '#393D40',
+        borderRadius: '2rem'
 
     }
     const linkStyle = {
 
-        color:'#022840', 
         textDecoration:'none', 
         fontSize: '2rem',
         color: '#393D40'
@@ -43,7 +42,6 @@ const SignInLinks = ({user, setUser})=> {
                     console.log('No such document!');
                   } else {
                     setName(doc.data().profileName)
-                    setSurname (doc.data().profileSurname)
                   }
                 }
             )

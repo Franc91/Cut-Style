@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import firebase from "../config/fbConfig";
@@ -27,22 +27,14 @@ const SignUp = (props) => {
             width: "50%",
             transform: "translateX(-50%) translateY(-50%)",
     }
-
-    const divStyle ={
-        borderRadius: '2rem',
-        backgroundColor: '#CFDAE6',
-        position: 'relative',
-        height: '70vh',
-        marginBottom: 10
+    
+    const alertStyle = {
+        color: 'red'
     }
 
     const buttonStyle={
-        
-            marginTop: '1rem'
-    }
-    const alertStyle={
-        
-            color: "red"
+        marginTop: '1rem',
+        backgroundColor: '#393D40'
     }
 
     const nameErr = (state.name.length > 5 )? true : false;
@@ -87,10 +79,10 @@ const SignUp = (props) => {
     })
 }
     return (
-        <div className="SignUp row" style={divStyle} >
-            <form style={formStyle} onSubmit={handleOnSubmit}>
+        <div className="SignUp divStyle" >
+            <form className="signUp" style={formStyle} onSubmit={handleOnSubmit}>
                 {
-                    state.fireError ? <div>{state.fireError}</div> : null
+                    state.fireError ? <div className='alert'>{state.fireError}</div> : null
                 }
                 <TextField 
                 type="text" 
@@ -98,7 +90,7 @@ const SignUp = (props) => {
                 name="name" 
                 value={state.name} 
                 onChange={handleOnChange}/>
-                <p style={alertStyle}>
+                <p className='alert' style={alertStyle}>
                     {
                        (!nameErr && state.name.length) ? "Imie powinno mieć wiecej niż 5 znaków" : null
                     }
@@ -109,7 +101,7 @@ const SignUp = (props) => {
                 name="surname" 
                 value={state.surname}
                 onChange={handleOnChange}/>
-                <p style={alertStyle}>
+                <p className='alert' style={alertStyle}>
                     {
                         (!surNameErr && state.surname.length)? "Nazwisko powinno mieć wiecej niż 5 znaków": null
                     }
@@ -120,7 +112,7 @@ const SignUp = (props) => {
                 name="email"
                 value={state.email}
                 onChange={handleOnChange}/>
-                <p style={alertStyle}>
+                <p className='alert' style={alertStyle}>
                     {
                         (!mailErr && state.email.length)? "Email powinien zawierać co najmniej 3 znaki oraz @": null
                     }
@@ -131,7 +123,7 @@ const SignUp = (props) => {
                 name="password" 
                 value={state.password}
                 onChange={handleOnChange}/>
-                <p style={alertStyle}>
+                <p className='alert' style={alertStyle} >
                     {
                         (!passErr && state.password.length)? "Hasła nie są takie same lub hasło zawiera mniej niż 5 znaków": null
                     }
@@ -142,14 +134,13 @@ const SignUp = (props) => {
                 name="rePassword"
                 value={state.rePassword} 
                 onChange={handleOnChange}/>
-                <p style={alertStyle}></p>
                 <Button
                     type="submit"
                     disabled={loginBtn} 
                     style={buttonStyle}
                     variant="contained"
                     color="primary"
-                    className='signUpBtn'
+                    className='signUpBtn actionBtn'
                     endIcon={<SendIcon>send</SendIcon>}
                 >
                     Zarejestruj

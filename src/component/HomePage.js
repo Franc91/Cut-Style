@@ -1,13 +1,42 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import firebase from '../config/fbConfig'
 
 const HomePage = ({user}) => {
+    const [name, setName] = useState(null);
+
+    useEffect(()=>{
+        if(user != null){
+            const db = firebase.firestore()
+            // const profile = 
+            db.collection('users')
+            .doc(user.uid)
+            .get()
+            .then(doc =>{
+                if (!doc.exists) {
+                    console.log('No such document!');
+                  } else {
+                    setName(doc.data().profileName)
+                  }
+                }
+            )
+        }
+    },[user])
         return (
-            <div style={{borderRadius: '2rem', backgroundColor:"#CFDAE6", marginBottom: 10, height:'70vh'}} id='Dashboard'>
+            <div className='homePage divStyle' id='homePage'>
                 {
-                    user ? <div>Witaj, prosze wypelnic formularz</div> : <div> Zaloguj się aby wypelnic forularz</div>
+                    user 
+                    ?<div className='logHomePage'>
+                            <h1> Witaj !</h1>
+                            <h2>W celu dokonania rejestracji należy kliknąć w zakładkę zapisz</h2>
+                        </div> 
+                    :<div className='unlogHomePage'style={{textAlign: 'center'}}> 
+                            <h1>Witaj nieznajomy!</h1>
+                            <h2></h2>
+                            <h2>Skorzystać z appki mogą wyłącznie posiadacze konta. W celu jego stworzenia należy dokonać rejestracji. </h2>
+                    </div> 
                 }
             </div>
         )
-}
+    }
 
 export default HomePage

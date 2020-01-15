@@ -19,28 +19,10 @@ const SignIn = (props) => {                 //przekazanie propsa z rodzica
         }
 
     })
-    const formStyle={
-        display: "flex",
-        flexDirection: "column",
-        alignItem: "center",
-        justifyContent: "center",
-        position: "absolute",
-        left: "50%",
-        width: "50%",
-        transform: "translate(-50%,-50%)",
-        top: "50%" 
-    }
-
-    const divStyle={
-        borderRadius: '2rem',
-        position: 'relative',
-        height: '70vh',
-        marginBottom: 10,
-        backgroundColor: '#CFDAE6'
-    }
 
     const buttonStyle={
-        marginTop: '1rem'
+        marginTop: '1rem',
+        backgroundColor: '#393D40'
     }
 
     const alertStyle={
@@ -79,8 +61,8 @@ const SignIn = (props) => {                 //przekazanie propsa z rodzica
     
     }
     return (
-        <div className="SignIn row" style={divStyle} >
-            <form style={formStyle} onSubmit={handleOnSubmit}> {/*novalidate*/}
+        <div className="SignIn divStyle"  >
+            <form className="signInForm formStyle" onSubmit={handleOnSubmit}> {/*novalidate*/}
             {
                 state.fireError ? <div>{state.fireError}</div> : null
             }
@@ -105,7 +87,7 @@ const SignIn = (props) => {                 //przekazanie propsa z rodzica
                     style={buttonStyle}
                     variant="contained"
                     color="primary"
-                    className='signUpBtn'
+                    className='signUpBtn actionBtn'
                     endIcon={<SendIcon>send</SendIcon>}
                 > 
                 Zaloguj
