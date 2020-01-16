@@ -3,25 +3,25 @@ import firebase from '../config/fbConfig'
 import UnLoggedPage from './homePage/UnLoggedPage';
 
 const HomePage = ({user}) => {
-    const [name, setName] = useState(null);
+    // const [name, setName] = useState(null);
 
-    useEffect(()=>{
-        if(user != null){
-            const db = firebase.firestore()
-            // const profile = 
-            db.collection('users')
-            .doc(user.uid)
-            .get()
-            .then(doc =>{
-                if (!doc.exists) {
-                    console.log('No such document!');
-                  } else {
-                    setName(doc.data().profileName)
-                  }
-                }
-            )
-        }
-    },[user])
+    // useEffect(()=>{
+    //     if(user != null){
+    //         const db = firebase.firestore()
+    //         // const profile = 
+    //         db.collection('users')
+    //         .doc(user.uid)
+    //         .get()
+    //         .then(doc =>{
+    //             if (!doc.exists) {
+    //                 console.log('No such document!');
+    //               } else {
+    //                 setName(doc.data().profileName)
+    //               }
+    //             }
+    //         )
+    //     }
+    // },[user])
         return (
             <div className='homePage divStyle' id='homePage'>
                 {
