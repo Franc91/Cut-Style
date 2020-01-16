@@ -11,8 +11,6 @@ const SignInLinks = ()=> {
 
     }
     const linkStyle = {
-
-        color:'#022840', 
         textDecoration:'none', 
         fontSize: '2rem',
         color: '#393D40'

@@ -54,7 +54,7 @@
 }
 
 .homePage{
-    div{
+    .logHomePage{
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -66,3 +66,67 @@
         transform: translateX(-50%) translateY(-50%);
     }
 }
+
+.unlogHomePage{
+    .photoInfo{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .text{
+        position: relative;
+        height: 65vh;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        width: 50vh;
+    }
+    .composition{
+        position: relative;
+        height: 65vh;
+        width: 50vh;
+
+    
+        &__photo{
+            width: 75%;
+            height: 25rem;
+            box-shadow: 0 1.5rem 4rem rgba( 0,0,0, .4);
+            border-radius: 2px;
+            position: absolute;
+            z-index: 10;
+            transition: all .2s;
+            outline-offset: 0;
+            &--p1{
+                left: 15rem;
+                top: 10rem;
+            }
+            &--p2{
+                left: -15rem;
+                top: 2rem;
+            }
+            &--p3{
+                left: 0rem;
+                top: 30rem;
+            }
+            &:hover{
+                outline: 1.5rem solid white;
+                transform: scale(1.25) translateY(-.5rem);
+                box-shadow: 0 2.5rem 4rem rgba(0,0,0, .5);
+                z-index: 20;
+            }
+        }
+    
+        &:hover &__photo:not(:hover){
+            transform: scale(.95);
+        }
+    }
+}
+
+
+
+
+
+  
+
+

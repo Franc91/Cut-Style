@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import firebase from '../config/fbConfig';
 import moment from 'moment';
 import 'moment/locale/pl'
-import { Avatar } from '@material-ui/core';
 
 const Dashboard = ({user}) => {
     const [ name, setName ] = useState(null);
@@ -52,7 +51,7 @@ const Dashboard = ({user}) => {
             <h1>Informacje o umówionej wizycie</h1>
             <h2>fryzjerka: {hairdresser}</h2>
             <h2>data wizyty: {  dateVisit?.seconds && moment.unix(dateVisit.seconds).locale('pl').format("LLLL")}</h2>
-            <h2>Dodatkowe informacje: {addInfo}</h2> 
+            <h2>Informacje dotyczace fryzury:{addInfo}</h2> 
             </div>
         </div>
     )

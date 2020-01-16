@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import firebase from '../config/fbConfig'
+import UnLoggedPage from './homePage/UnLoggedPage';
 
 const HomePage = ({user}) => {
     const [name, setName] = useState(null);
@@ -27,12 +28,14 @@ const HomePage = ({user}) => {
                     user 
                     ?<div className='logHomePage'>
                             <h1> Witaj !</h1>
-                            <h2>W celu dokonania rejestracji należy kliknąć w zakładkę zapisz</h2>
+                            <h2>W celu dokonania rejestracji należy kliknąć w zakładkę Zapisy</h2>
                         </div> 
-                    :<div className='unlogHomePage'style={{textAlign: 'center'}}> 
-                            <h1>Witaj nieznajomy!</h1>
+                    :<div className='unlogHomePage'> 
+                            {/* <h1>Witaj nieznajomy!</h1>
                             <h2></h2>
-                            <h2>Skorzystać z appki mogą wyłącznie posiadacze konta. W celu jego stworzenia należy dokonać rejestracji. </h2>
+                            <h2>Skorzystać z appki mogą wyłącznie posiadacze konta. W celu jego stworzenia należy dokonać rejestracji. </h2> */}
+                            <UnLoggedPage/>
+                            
                     </div> 
                 }
             </div>
