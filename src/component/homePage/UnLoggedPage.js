@@ -8,8 +8,11 @@ const UnLoggedPage = () => {
         <div className="row photoInfo">
             <div className="col-1-of-2">
                 <div className='text'>
-                <h3>You're going to fall in love with nature</h3>
-                <p class="paragraph">
+                <h3>Lorem ipsum dolor consectetur sit amet.</h3>
+                <p className="paragraph">
+                    Ipsum dolor sit amet consectetur adipisicing elit. Voluptate deleniti, enim odit doloribus culpa accusantium? Sapiente dolorem aliquam odio. Maiores perspiciatis cumque mollitia ratione nostrum accusamus ducimus quam blanditiis placeat.
+                </p> 
+                <p className="paragraph">
                     Ipsum dolor sit amet consectetur adipisicing elit. Voluptate deleniti, enim odit doloribus culpa accusantium? Sapiente dolorem aliquam odio. Maiores perspiciatis cumque mollitia ratione nostrum accusamus ducimus quam blanditiis placeat.
                 </p>
                 </div>

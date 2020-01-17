@@ -49,8 +49,9 @@
         padding: 2rem;
         box-shadow: 10px 10px 16px 3px rgba(0,0,0,0.3);
         border-radius: 2rem;
-        margin: 3rem;
+        margin: 1rem;
     }
+
 }
 
 .homePage{
@@ -81,6 +82,9 @@
         align-items: flex-start;
         justify-content: center;
         width: 50vh;
+        .paragraph{
+            margin: .5rem 0 2rem 0;
+        }
     }
     .composition{
         position: relative;
@@ -89,8 +93,8 @@
 
     
         &__photo{
-            width: 75%;
-            height: 25rem;
+            width: 100%;
+            height: 20rem;
             box-shadow: 0 1.5rem 4rem rgba( 0,0,0, .4);
             border-radius: 2px;
             position: absolute;
@@ -98,8 +102,8 @@
             transition: all .2s;
             outline-offset: 0;
             &--p1{
-                left: 15rem;
-                top: 10rem;
+                left: 14rem;
+                top: 7rem;
             }
             &--p2{
                 left: -15rem;
@@ -107,7 +111,7 @@
             }
             &--p3{
                 left: 0rem;
-                top: 30rem;
+                top: 20rem;
             }
             &:hover{
                 outline: 1.5rem solid #CFDAE6;
