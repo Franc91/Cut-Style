@@ -95,7 +95,7 @@ const Registration = ({user}) => {
     const handleOnSubmit = (e) =>{
         console.log(user, 'dupa', firebase.auth().currentUser.uid)
         e.preventDefault()
-        if(firebase.auth().currentUser !== null){
+        if(firebase.auth().currentUser !== null & firebase.auth().currentUser !== undefined){
             db.collection('users')
             .doc(firebase.auth().currentUser.uid)
             .set({regData:{
@@ -177,7 +177,7 @@ const Registration = ({user}) => {
                     <TextField
                         id="additionalInfo"
                         name="addInfo"
-                        label="Dodatkowe informacje"
+                        label="Informacje dotyczące fryzury"
                         multiline
                         rowsMax="4"
                         value={state.addInfo}

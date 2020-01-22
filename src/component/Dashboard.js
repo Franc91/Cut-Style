@@ -33,7 +33,6 @@ const Dashboard = ({user}) => {
 
     console.log(name, surname, regData);
     console.log(regData);
-
     console.log(hairColor)
     console.log(dateVisit)
 
